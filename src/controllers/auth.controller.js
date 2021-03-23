@@ -10,12 +10,11 @@ const newToken = (user) => {
 const signup = async (req, res) => {
   try {
     const user = await User.create(req.body);
+    console.log("user", user);
     const token = newToken(user);
     return res.status(201).json({ data: { token } });
   } catch (e) {
-    return res
-      .status(500)
-      .json({ status: "failed", message: "Something went wrong" });
+    return res.status(500).json({ status: "failed", message: e.message });
   }
 };
 

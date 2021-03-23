@@ -3,12 +3,15 @@ const express = require("express");
 const connect = require("./config/db");
 const passport = require("./config/passport");
 
-const User = require("./models/user.model");
 const { signup, signin } = require("./controllers/auth.controller");
-const userController = require("./controllers/user.controller");
+const userController = require("./controllers/product.controller");
 
 const app = express();
 app.use(express.json());
+
+app.post("/signup", signup);
+app.post("/signin", signin);
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -57,10 +60,7 @@ app.get(
   }
 );
 
-app.post("/signup", signup);
-app.post("/signin", signin);
-
-app.use("/users", userController);
+app.use("/products", userController);
 
 const start = async () => {
   await connect();
